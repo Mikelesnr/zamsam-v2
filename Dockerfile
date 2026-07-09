@@ -1,9 +1,9 @@
 # Stage 1: Build frontend assets
 FROM node:20-slim AS frontend
 WORKDIR /app
-COPY package.json vite.config.js tailwind.config.js postcss.config.js package-lock.json ./
+COPY package.json vite.config.js tailwind.config.js postcss.config.js./
 COPY resources resources
-RUN npm ci && npm run build
+RUN npm install && npm run build
 
 # Stage 2: Laravel backend
 FROM php:8.3-fpm-alpine AS backend
