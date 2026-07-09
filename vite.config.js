@@ -1,5 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-oxc';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 

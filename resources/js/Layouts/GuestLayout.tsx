@@ -3,6 +3,7 @@ import { Link } from "@inertiajs/react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { SiteHeader } from "@/Components/SiteHeader";
 import { SiteFooter } from "@/Components/SiteFooter";
+import { FloatingActions } from "@/Components/FloatingActions";
 
 export default function Guest({ children }: PropsWithChildren) {
   return (
@@ -24,6 +25,9 @@ export default function Guest({ children }: PropsWithChildren) {
 
       {/* Global site footer */}
       <SiteFooter />
+
+      {/* Floating actions */}
+      <FloatingActions />
     </div>
   );
 }
