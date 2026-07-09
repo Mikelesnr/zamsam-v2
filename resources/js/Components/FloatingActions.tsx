@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { COMPANY, waLink } from "@/lib/contact";
+import { COMPANY, waLink } from "@/Lib/contact";
 
 /**
  * Floating action stack: WhatsApp deep-link + chat bubble placeholder.

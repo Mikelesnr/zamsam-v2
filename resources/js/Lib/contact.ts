@@ -16,7 +16,7 @@ export const COMPANY = {
   contact: {
     operations: {
       name: "M. Mwanza",
-      role: "Operations",
+      role: "Founder & Head Technician",
       phone: "+263 773 296 227",
       phoneRaw: "263773296227",
     },
@@ -25,7 +25,7 @@ export const COMPANY = {
       phoneRaw: "263712793798",
     },
     emails: [
-      "michaelmwanza@rocketmail.com",
+      "michaelmwanza@zamsam.org",
       "zamsamrefrigeration@gmail.com",
     ],
   },
