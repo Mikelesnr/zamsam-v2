@@ -1,7 +1,7 @@
 # Stage 1: Build frontend assets
 FROM node:20-slim AS frontend
 WORKDIR /app
-COPY package.json vite.config.js tailwind.config.js postcss.config.js ./
+COPY package.json vite.config.js tailwind.config.js postcss.config.js package-lock.json ./
 COPY resources resources
 RUN npm ci && npm run build
 
