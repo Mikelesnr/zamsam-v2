@@ -1,5 +1,5 @@
 # Stage 1: Build frontend assets
-FROM node:20-slim AS frontend
+FROM node:current-slim AS frontend
 WORKDIR /app
 COPY package.json vite.config.js tailwind.config.js postcss.config.js ./
 COPY resources resources
