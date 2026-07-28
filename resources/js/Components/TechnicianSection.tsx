@@ -14,7 +14,7 @@ export default function TechnicianSection(): JSX.Element {
             Meet Our Head Technician
           </h2>
           <p className="mt-6 text-lg font-light italic leading-relaxed text-white/85">
-            "At Zamsam, we don't just fix machines — we protect your investments.""At Zamsam, we don't just fix machines — we protect your investments. Whether it's a home fridge or a hospital cold room, our standard for reliability stays the same."
+            "At Zamsam, we don't just fix machines — we protect your investments. Whether it's a home fridge or a hospital cold room, our standard for reliability stays the same."
           </p>
           <div className="mt-8 border-b-[3px] border-brand-red pb-4">
             <p className="font-display text-xl font-bold uppercase tracking-[0.15em]">
