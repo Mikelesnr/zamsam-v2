@@ -1,4 +1,4 @@
-# Stage 1: PHP & Composer Dependencies
+# Stage 1: Install PHP Dependencies with Composer
 FROM php:8.3-cli-alpine AS composer_base
 
 RUN apk add --no-cache \
@@ -13,41 +13,35 @@ COPY composer.json composer.lock ./
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
-
 COPY . .
-
-# Generate autoloader and Ziggy routes JS file
-RUN composer dump-autoload --optimize \
-    && php artisan ziggy:generate resources/js/ziggy.js --typescript || true
+RUN composer dump-autoload --optimize
 
 
-# Stage 2: Build Frontend Assets with Node
+# Stage 2: Build Frontend & SSR Assets with Node
 FROM node:20-alpine AS frontend
 WORKDIR /app
 
-# Prevent Node OOM memory crashes on Render
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
-# Copy package files
 COPY package.json package-lock.json* ./
 RUN npm ci || npm install
 
-# Copy EVERYTHING needed for Vite (configs, html, resources, ziggy)
+# Copy source code AND vendor folder so Ziggy imports work cleanly
 COPY . .
-COPY --from=composer_base /app/resources/js/ziggy.js ./resources/js/ziggy.js
+COPY --from=composer_base /app/vendor ./vendor
 
-# Build Vite assets
+# Build client assets and SSR bundle
 RUN npm run build
 
 
-# Stage 3: Final Production Backend
+# Stage 3: Final Production Image
 FROM php:8.3-fpm-alpine AS backend
 
 RUN apk add --no-cache \
     nginx curl zip unzip git libpng-dev libjpeg-turbo-dev \
     libwebp-dev libxpm-dev libzip-dev freetype-dev \
     oniguruma-dev icu-dev bash shadow postgresql-dev \
-    supervisor
+    supervisor nodejs
 
 RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd intl zip
 
@@ -60,6 +54,7 @@ ENV LOG_CHANNEL=stderr
 COPY . .
 COPY --from=composer_base /app/vendor ./vendor
 COPY --from=frontend /app/public/build ./public/build
+COPY --from=frontend /app/bootstrap/ssr ./bootstrap/ssr
 
 RUN mkdir -p bootstrap/cache storage/framework/views storage/framework/sessions storage/framework/cache \
     && chmod -R 775 bootstrap/cache storage \
