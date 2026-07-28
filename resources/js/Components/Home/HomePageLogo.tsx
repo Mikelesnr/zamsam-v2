@@ -14,12 +14,12 @@ export default function ApplicationLogo({ className = '', ...props }: HTMLAttrib
             <div className="flex flex-col justify-center leading-tight">
                 {/* Single line with red color on Engineering (Pvt) Ltd */}
                 <div className="text-base font-black tracking-tight md:text-lg">
-                    <span className="text-white">Zamsam </span>
+                    <span className="text-slate-900">Zamsam </span>
                     <span className="text-red-600">Engineering (Pvt) Ltd</span>
                 </div>
 
                 {/* Subtitle */}
-                <span className="text-[9px] font-extrabold tracking-wider text-slate-300 uppercase md:text-[10px]">
+                <span className="text-[9px] font-extrabold tracking-wider text-slate-900 uppercase md:text-[10px]">
                     REFRIGERATION &amp; AIR CONDITIONING
                 </span>
             </div>
