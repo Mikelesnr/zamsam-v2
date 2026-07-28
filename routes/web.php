@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,5 +36,7 @@ Route::get('/contact', function () {
 Route::get('/services', function () {
     return Inertia::render('Services');
 });
+
+Route::post('/api/chat', [ChatController::class, 'respond'])->name('chat.respond');
 
 require __DIR__ . '/auth.php';
