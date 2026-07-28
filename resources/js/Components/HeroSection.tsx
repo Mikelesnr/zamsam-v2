@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import heroImg from "@/Images/hero-coldroom.jpg";
+import heroImg from "@/Images/zamsamtruck.jpg";
 import { COMPANY, telLink, waLink } from "@/Lib/contact";
 
 export default function HeroSection(): JSX.Element {

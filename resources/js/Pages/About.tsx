@@ -1,29 +1,9 @@
 import { Head } from "@inertiajs/react";
 import Guest from "@/Layouts/GuestLayout";
 import { COMPANY } from "@/Lib/contact";
-
-const TEAM = [
-  {
-    name: COMPANY.contact.operations.name,
-    role: "Founder & Head Technician",
-    bio: "Fifteen-plus years engineering refrigeration and cooling systems across Zimbabwe. Runs every installation and callout from 3 Alexander Road.",
-  },
-  {
-    name: "Senior Refrigeration Tech",
-    role: "Cold Room Specialist",
-    bio: "Design, panelling and commissioning of walk-in cold rooms for retail, medical and agricultural clients.",
-  },
-  {
-    name: "HVAC Technician",
-    role: "Air Conditioning",
-    bio: "Installs, services and re-gasses split, cassette and ducted air-conditioning units across commercial and residential sites.",
-  },
-  {
-    name: "Electrical Technician",
-    role: "Electrical Installations",
-    bio: "Handles wiring, board-level diagnostics and appliance repairs for cooling and general electrical systems.",
-  },
-];
+import TeamSection from "@/Components/About/TeamSection";
+import LeadershipSection from "@/Components/About/LeadershipSection";
+import GallerySection from "@/Components/About/GallerySection";
 
 export default function About() {
   return (
@@ -63,22 +43,11 @@ export default function About() {
           </div>
           <div className="md:col-span-2">
             <h2 className="font-display text-3xl font-bold uppercase">The Team</h2>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              {TEAM.map((m) => (
-                <article
-                  key={m.name}
-                  className="border border-navy-950/10 border-b-[3px] border-b-brand-red bg-white p-6"
-                >
-                  <h3 className="font-display text-lg font-bold uppercase">{m.name}</h3>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-brand-red">
-                    {m.role}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-navy-950/70">{m.bio}</p>
-                </article>
-              ))}
-            </div>
+            <TeamSection />
           </div>
         </div>
+        <LeadershipSection />
+        <GallerySection />
       </section>
     </Guest>
   );
