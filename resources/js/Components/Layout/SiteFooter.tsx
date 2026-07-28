@@ -41,6 +41,15 @@ export function SiteFooter() {
           <span>© {new Date().getFullYear()} {COMPANY.legalName}</span>
           <span>Harare's Cooling Experts</span>
         </div>
+        <div className="mx-auto max-w-7xl px-6 pb-4 text-center text-[10px] uppercase tracking-[0.15em] text-white/25 md:text-right">
+          Site by{" "}
+          <a
+            href="mailto:michael@michaelmwanza.site"
+            className="text-white/40 hover:text-brand-red"
+          >
+            Michael Mwanza Jnr
+          </a>
+        </div>
       </div>
     </footer>
   );

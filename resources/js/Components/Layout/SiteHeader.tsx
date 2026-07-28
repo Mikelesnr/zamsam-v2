@@ -9,7 +9,7 @@ export function SiteHeader() {
           <span className="font-display text-xl font-bold uppercase tracking-tight">
             Zamsam
           </span>
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-navy-500">
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-brand-red">
             Engineering
           </span>
         </Link>
