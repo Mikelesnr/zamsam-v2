@@ -14,8 +14,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 COPY . .
-RUN composer dump-autoload --optimize
 
+# Run dump-autoload with --no-scripts to prevent package:discover from failing
+RUN composer dump-autoload --optimize --no-scripts
 
 # Stage 2: Build Frontend & SSR Assets with Node
 FROM node:20-alpine AS frontend
