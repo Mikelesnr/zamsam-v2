@@ -15,8 +15,8 @@ export const COMPANY = {
   ],
   contact: {
     operations: {
-      name: "M. Mwanza",
-      role: "Founder & Head Technician",
+      name: "Michael Mwanza Snr",
+      role: "Founder, Director & Head Technician",
       phone: "+263 773 296 227",
       phoneRaw: "263773296227",
     },
