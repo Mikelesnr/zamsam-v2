@@ -25,8 +25,8 @@ export const COMPANY = {
       phoneRaw: "263712793798",
     },
     emails: [
-      "michaelmwanza@zamsam.org",
       "zamsamrefrigeration@gmail.com",
+      // "michaelmwanza@zamsam.org",
     ],
   },
 } as const;
