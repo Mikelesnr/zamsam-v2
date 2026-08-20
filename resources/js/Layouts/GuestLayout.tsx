@@ -6,7 +6,7 @@ import { FloatingActions } from "@/Components/FloatingActions";
 
 export default function Guest({ children }: PropsWithChildren) {
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100 dark:bg-gray-900">
+    <div className="flex min-h-screen flex-col bg-ice">
       {/* Global site header */}
       <SiteHeader />
 
@@ -14,9 +14,7 @@ export default function Guest({ children }: PropsWithChildren) {
       <CtaStrip />
 
       {/* Main content area */}
-      <main className="flex-1 w-full overflow-hidden bg-white dark:bg-gray-800">
-        {children}
-      </main>
+      <main className="w-full flex-1 overflow-hidden bg-ice">{children}</main>
 
       {/* Global site footer */}
       <SiteFooter />

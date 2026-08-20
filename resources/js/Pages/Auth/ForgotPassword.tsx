@@ -1,6 +1,7 @@
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import AuthCard from '@/Components/Authcard';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
@@ -20,14 +21,15 @@ export default function ForgotPassword({ status }: { status?: string }) {
         <GuestLayout>
             <Head title="Forgot Password" />
 
-            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+            <AuthCard>
+            <div className="mb-4 text-sm text-navy-950/70">
                 Forgot your password? No problem. Just let us know your email
                 address and we will email you a password reset link that will
                 allow you to choose a new one.
             </div>
 
             {status && (
-                <div className="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
+                <div className="mb-4 text-sm font-medium text-brand-red">
                     {status}
                 </div>
             )}
@@ -51,6 +53,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     </PrimaryButton>
                 </div>
             </form>
+            </AuthCard>
         </GuestLayout>
     );
 }
