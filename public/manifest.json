@@ -1,0 +1,22 @@
+{
+  "name": "Zamsam Engineering",
+  "short_name": "Zamsam",
+  "description": "Commercial & Residential Refrigeration Services in Highlands, Harare",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F1629",
+  "theme_color": "#0F1629",
+  "icons": [
+    {
+      "src": "/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
