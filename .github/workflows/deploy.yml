@@ -1,55 +1,70 @@
-name: Deploy Laravel
+name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy and Restart Services
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }} # root
-          key: ${{ secrets.SSH_KEY }}
-          script: |
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -e
+
+            # Ensure proper folder permissions for deployment
+            sudo chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} /var/www/zamsam-v2
+
             cd /var/www/zamsam-v2
 
-            # Load NVM & Node environment for SSH session
+            # Load NVM & Node environment into non-interactive SSH session
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-            echo "--- Pulling latest code ---"
-            git pull origin main
+            # Trust repo directory
+            git config --global --add safe.directory /var/www/zamsam-v2
 
-            echo "--- Running backend tasks ---"
-            composer install --no-dev --optimize-autoloader --no-interaction
+            echo "🔄 Fetching latest code..."
+            git fetch origin
+            git reset --hard origin/main
+
+            echo "📦 Installing PHP dependencies..."
+            composer install --no-dev --optimize-autoloader
+
+            echo "⚙️ Running Laravel commands..."
             php artisan migrate --force
-
-            echo "--- Building frontend assets ---"
-            npm ci
-            npm run build
-
-            echo "--- Optimizing Laravel cache ---"
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
 
-            echo "--- Setting correct web permissions ---"
-            # Keep web server as owner for writeable directories
-            chown -R www-data:www-data /var/www/zamsam-v2/storage /var/www/zamsam-v2/bootstrap/cache
-            chmod -R 775 /var/www/zamsam-v2/storage /var/www/zamsam-v2/bootstrap/cache
+            echo "🛠️ Building frontend..."
+            npm ci
+            npm run build
 
-            echo "--- Restarting services ---"
-            systemctl reload nginx
-            
-            # Restart PHP-FPM to clear OPCache
-            systemctl restart php8.4-fpm
+            echo "🔐 Setting permissions..."
+            # App storage and cache ownership
+            sudo chown -R www-data:www-data storage bootstrap/cache
+            sudo chmod -R 775 storage bootstrap/cache
 
-            echo "Deployment finished successfully!"
+            # Frontend build ownership
+            sudo chown -R www-data:www-data public/build
+
+            echo "🚀 Restarting services..."
+            sudo systemctl restart php8.4-fpm
+            sudo systemctl reload nginx
+
+            echo "✅ Deployment complete at $(date)" | tee -a ~/deploy.log
+          EOF
