@@ -21,6 +21,10 @@ jobs:
             set -e
             cd /var/www/zamsam-v2
 
+            # Load NVM & Node environment for SSH session
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
             echo "--- Pulling latest code ---"
             git pull origin main
 
@@ -46,10 +50,10 @@ jobs:
             systemctl reload nginx
             
             # Restart PHP-FPM to clear OPCache
-            systemctl restart php8.3-fpm # Adjust version (e.g., php8.2-fpm) if needed
+            systemctl restart php8.4-fpm
             
             # Restart queue workers/supervisor
-            systemctl restart supervisor
+            systemctl restart supervisor || true
             php artisan queue:restart
 
             echo "Deployment finished successfully!"
