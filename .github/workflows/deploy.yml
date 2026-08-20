@@ -30,9 +30,10 @@ jobs:
 
             cd /var/www/zamsam-v2
 
-            # Load NVM & Node environment into non-interactive SSH session
+            # Load NVM and export system PATH to use the server's active Node version
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            export PATH="$NVM_DIR/versions/node/$(ls $NVM_DIR/versions/node 2>/dev/null | tail -n 1)/bin:$PATH"
 
             # Trust repo directory
             git config --global --add safe.directory /var/www/zamsam-v2
@@ -50,7 +51,7 @@ jobs:
             php artisan route:cache
             php artisan view:cache
 
-            echo "🛠️ Building frontend..."
+            echo "🛠️ Building frontend with Node $(node -v)..."
             npm ci
             npm run build
 
