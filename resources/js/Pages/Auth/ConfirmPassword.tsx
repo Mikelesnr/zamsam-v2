@@ -2,6 +2,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import AuthCard from '@/Components/AuthCard';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
@@ -23,7 +24,8 @@ export default function ConfirmPassword() {
         <GuestLayout>
             <Head title="Confirm Password" />
 
-            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+            <AuthCard>
+            <div className="mb-4 text-sm text-navy-950/70">
                 This is a secure area of the application. Please confirm your
                 password before continuing.
             </div>
@@ -51,6 +53,7 @@ export default function ConfirmPassword() {
                     </PrimaryButton>
                 </div>
             </form>
+            </AuthCard>
         </GuestLayout>
     );
 }

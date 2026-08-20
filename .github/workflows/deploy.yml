@@ -1,0 +1,71 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            set -e
+
+            # Ensure proper folder permissions for deployment
+            sudo chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} /var/www/zamsam-v2
+
+            cd /var/www/zamsam-v2
+
+            # Load NVM and export system PATH to use the server's active Node version
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            export PATH="$NVM_DIR/versions/node/$(ls $NVM_DIR/versions/node 2>/dev/null | tail -n 1)/bin:$PATH"
+
+            # Trust repo directory
+            git config --global --add safe.directory /var/www/zamsam-v2
+
+            echo "🔄 Fetching latest code..."
+            git fetch origin
+            git reset --hard origin/main
+
+            echo "📦 Installing PHP dependencies..."
+            composer install --no-dev --optimize-autoloader
+
+            echo "⚙️ Running Laravel commands..."
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            echo "🛠️ Building frontend with Node $(node -v)..."
+            npm ci
+            npm run build
+
+            echo "🔐 Setting permissions..."
+            # App storage and cache ownership
+            sudo chown -R www-data:www-data storage bootstrap/cache
+            sudo chmod -R 775 storage bootstrap/cache
+
+            # Frontend build ownership
+            sudo chown -R www-data:www-data public/build
+
+            echo "🚀 Restarting services..."
+            sudo systemctl restart php8.4-fpm
+            sudo systemctl reload nginx
+
+            echo "✅ Deployment complete at $(date)" | tee -a ~/deploy.log
+          EOF

@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import AuthCard from '@/Components/AuthCard';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
@@ -32,13 +33,14 @@ export default function Login({
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
+            <AuthCard>
+                {status && (
+                    <div className="mb-4 text-sm font-medium text-brand-red">
+                        {status}
+                    </div>
+                )}
 
-            <form onSubmit={submit}>
+                <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
 
@@ -84,7 +86,7 @@ export default function Login({
                                 )
                             }
                         />
-                        <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                        <span className="ms-2 text-sm text-navy-950/70">
                             Remember me
                         </span>
                     </label>
@@ -94,7 +96,7 @@ export default function Login({
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                            className="rounded-sm text-sm text-navy-950/70 underline hover:text-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red/40 focus:ring-offset-2"
                         >
                             Forgot your password?
                         </Link>
@@ -105,6 +107,7 @@ export default function Login({
                     </PrimaryButton>
                 </div>
             </form>
+            </AuthCard>
         </GuestLayout>
     );
 }

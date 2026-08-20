@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Enums\UserRole;
 use Illuminate\Support\Facades\Hash;
+use RuntimeException;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,10 +20,18 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-
         // 1. Provision Admin Core Security Account First
-        $email = config('services.admin.email', 'admin@alignedsurveyors.com');
-        $password = config('services.admin.password', 'SecretPassword123');
+        // Email and password come from .env only (ADMIN_EMAIL / ADMIN_PASSWORD) —
+        // no hardcoded fallback, so this fails loudly instead of silently
+        // seeding a guessable account if the env vars are missing.
+        $email = config('services.admin.email');
+        $password = config('services.admin.password');
+
+        if (empty($email) || empty($password)) {
+            throw new RuntimeException(
+                'ADMIN_EMAIL and ADMIN_PASSWORD must be set in .env before seeding the admin account.'
+            );
+        }
 
         $admin = User::updateOrCreate(
             ['email' => $email],
