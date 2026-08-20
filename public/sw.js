@@ -1,10 +1,10 @@
 const CACHE_NAME = 'zamsam-v1';
 const ASSETS = [
   '/',
-  '/favicon.ico',
+  '/images/favicon.ico',
   '/manifest.json',
-  '/android-chrome-192x192.png',
-  '/android-chrome-512x512.png'
+  '/images/android-chrome-192x192.png',
+  '/images/android-chrome-512x512.png'
 ];
 
 self.addEventListener('install', (event) => {
