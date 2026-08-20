@@ -1,0 +1,55 @@
+name: Deploy Laravel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy and Restart Services
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }} # root
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -e
+            cd /var/www/zamsam-v2
+
+            echo "--- Pulling latest code ---"
+            git pull origin main
+
+            echo "--- Running backend tasks ---"
+            composer install --no-dev --optimize-autoloader --no-interaction
+            php artisan migrate --force
+
+            echo "--- Building frontend assets ---"
+            npm ci
+            npm run build
+
+            echo "--- Optimizing Laravel cache ---"
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            echo "--- Setting correct web permissions ---"
+            # Keep web server as owner for writeable directories
+            chown -R www-data:www-data /var/www/zamsam-v2/storage /var/www/zamsam-v2/bootstrap/cache
+            chmod -R 775 /var/www/zamsam-v2/storage /var/www/zamsam-v2/bootstrap/cache
+
+            echo "--- Restarting services ---"
+            systemctl reload nginx
+            
+            # Restart PHP-FPM to clear OPCache
+            systemctl restart php8.3-fpm # Adjust version (e.g., php8.2-fpm) if needed
+            
+            # Restart queue workers/supervisor
+            systemctl restart supervisor
+            php artisan queue:restart
+
+            echo "Deployment finished successfully!"
