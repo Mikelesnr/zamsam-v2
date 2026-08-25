@@ -14,7 +14,7 @@ export default function Welcome({
     if (auth.user) {
         return (
             <AuthenticatedLayout>
-                <Head title="Zamsam Engineering — Refrigeration & Air Conditioning in Harare" />
+                <Head title="Zamsam Engineering — Refrigeration & Air Conditioning in Zimbabwe" />
 
                 <div className="bg-ice text-navy-950">
                     <HeroSection />
@@ -29,7 +29,7 @@ export default function Welcome({
 
     return (
         <GuestLayout>
-            <Head title="Zamsam Engineering — Refrigeration & Air Conditioning in Harare" />
+            <Head title="Zamsam Engineering — Refrigeration & Air Conditioning in Zimbabwe" />
 
             <div className="bg-ice text-navy-950">
                 <HeroSection />
