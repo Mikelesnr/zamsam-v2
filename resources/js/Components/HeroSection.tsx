@@ -9,7 +9,7 @@ export default function HeroSection(): JSX.Element {
         <div>
           <h1 className="font-display text-5xl font-bold uppercase leading-[0.9] md:text-7xl">
             Precision <br /> Cooling <br />
-            {/* <span className="text-brand-red">Harare</span> */}
+            <span className="text-brand-red">Countrywide</span>
           </h1>
           <p className="mt-6 max-w-md text-base leading-relaxed text-white/75 md:text-lg">
             Cold rooms, industrial & domestic refrigeration, air conditioning, re-gassing and leak repair.
