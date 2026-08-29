@@ -1,0 +1,18 @@
+[90m= [39m[34;4mApp\Models\JobCard[39;24m {#8145
+    [34mjob_card_number[39m: [34;4mRamsey\Uuid\Lazy\LazyUuidFromString[39;24m {#7717
+      [34muuid[39m: [32m"[39m[32me0c51442-9ec5-47a3-816e-3a3f163f29a6[39m[32m"[39m,
+    },
+    [34mstatus[39m: [32m"[39m[32mpending[39m[32m"[39m,
+    [34mpriority[39m: [32m"[39m[32mhigh[39m[32m"[39m,
+    [34mproduct_name[39m: [32m"[39m[32mSamsung Fridge[39m[32m"[39m,
+    [34mproduct_model[39m: [32m"[39m[32mRT38K5930SL[39m[32m"[39m,
+    [34mserial_number[39m: [32m"[39m[32mSN-REF-2026-X[39m[32m"[39m,
+    [34missue_description[39m: [32m"[39m[32mCompressor fails to start; cooling system inactive.[39m[32m"[39m,
+    [34mrepair_notes[39m: [32m"[39m[32mInitial diagnostic scheduled.[39m[32m"[39m,
+    [34massigned_by[39m: [32m"[39m[32m01a04fa2-3dd2-707f-b0d0-680fa05f3e2b[39m[32m"[39m,
+    [34massigned_to[39m: [32m"[39m[32m01a04fa2-3dd2-707f-b0d0-680fa05f3e2b[39m[32m"[39m,
+    [34mestimated_cost[39m: [35m120.0[39m,
+    [34mid[39m: [32m"[39m[32m01a04fa7-18aa-73e4-b99f-6619d5348589[39m[32m"[39m,
+    [34mupdated_at[39m: [32m"[39m[32m2026-08-29 22:32:26[39m[32m"[39m,
+    [34mcreated_at[39m: [32m"[39m[32m2026-08-29 22:32:26[39m[32m"[39m,
+  }
